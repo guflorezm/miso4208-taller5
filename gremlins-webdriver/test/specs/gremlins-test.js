@@ -15,7 +15,7 @@ function unleashGremlins(ttl, callback) {
         callback();
     }
     var horde = window.gremlins.createHorde()
-		    .allGremlins()
+		    //.allGremlins()
 				.gremlin(gremlins.species.formFiller()
 				.canFillElement( function (element) {
 					// Intenta llenar solo en cajas de texto y textareas
@@ -26,6 +26,10 @@ function unleashGremlins(ttl, callback) {
 					// Intenta hacer click sobre botones y links
 					return element.tagName.toLowerCase() === 'a' || element.tagName.toLowerCase() === 'button';
 				}))
+				// Le da mas prioridad al clicker
+				.strategy(gremlins.strategies.distribution()
+					.distribution([0.3, 0.7])
+				)
     horde.seed(1234);
 
     horde.after(callback);

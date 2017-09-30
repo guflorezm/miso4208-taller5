@@ -13,6 +13,17 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
+// Obtiene una cadena de texto de forma randomica
+function getRandomText(textLength) {
+  var text = "";
+  var possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()/-><;,.?: ";
+
+  for (var i = 0; i < textLength; i++)
+    text += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+
+  return text;
+};
+
 /*
 function randomClick(monkeysLeft) {
 
@@ -64,7 +75,7 @@ function randomEvent(monkeysLeft) {
               var randomSelect = $Selects.get(getRandomInt(0, $Selects.length));
               if(!Cypress.Dom.isHidden(randomSelect)) {
                   var selectOptions = randomSelect.options;
-                  // Obtenemos una opcion al azar de las del select seleccionado
+                  // Obtenemos una opcion azar del select seleccionado al azar
                   var randomOption = selectOptions[getRandomInt(0,selectOptions.length)];
                   var optionValue = randomOption.value;
                   cy.wrap(randomSelect).select(optionValue);
@@ -79,7 +90,9 @@ function randomEvent(monkeysLeft) {
           cy.get('input').then($Inputs => {
               var randomInput = $Inputs.get(getRandomInt(0, $Inputs.length));
               if(!Cypress.Dom.isHidden(randomInput)) {
-                  cy.wrap(randomInput).click({force: true}).type("Monkey Test");
+                  // Obtenemos un texto al azar y lo introducimos en el input
+                  var randomText = getRandomText(getRandomInt(1, 30));
+                  cy.wrap(randomInput).click({force: true}).type(randomText);
                   monkeysLeft = monkeysLeft - 1;
               }
               setTimeout(randomEvent, 1000, monkeysLeft);

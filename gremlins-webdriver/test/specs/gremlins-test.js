@@ -18,8 +18,15 @@ function unleashGremlins(ttl, callback) {
 		    //.allGremlins()
 				.gremlin(gremlins.species.formFiller()
 				.canFillElement( function (element) {
+
+					var returnValue = false;
+					var elemTag = element.tagName.toLowerCase();
+					var elemType = element.type.toLowerCase();
 					// Intenta llenar solo en cajas de texto y textareas
-					return (element.tagName.toLowerCase() === 'input' && element.type.toLowerCase() === 'text') || element.tagName.toLowerCase() === 'textarea' ;
+					if( elemTag === 'textarea' || ( elemTag === 'input' && ( elemType === 'text' || elemType === 'number' || elemType === 'email' || elemType === 'password') ))
+						returnValue = true;
+
+					return returnValue;
 				}))
 				.gremlin(gremlins.species.clicker().clickTypes(['click'])
 				.canClick( function (element) {
